@@ -1,8 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import mongoose, { model, Schema } from 'mongoose';
+import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 dotenv.config();
+
+import Note from './models/Note.js';
 
 const app = express();
 app.use(cors());
@@ -19,15 +21,7 @@ connectDB();
 
 const PORT = 5000;
 
-//creating the structure or the schema
-const noteSchema = new Schema({
-    title:String,
-    content:String,
-    category:String
-})
 
-//creating the model using schema
-const Note = model("Note" , noteSchema);
 
 
 
@@ -43,6 +37,37 @@ app.get("/health" , (req , res)=>{
 app.post("/notes" , async( req , res )=>{
     const {title , content , category} = req.body;
 
+    
+    //Adding the validations
+    if(!title){
+      return res.json({
+        success:false,
+        message:"title is required",
+        data:null
+      })
+    }
+
+    if(!content){
+      return res.json({
+        success:false,
+        message:"content is required",
+        data:null
+      })
+    }
+
+    if(!category){
+      return res.json({
+        success:false,
+        message:"category is required",
+        data:null
+      })
+    }
+    
+    
+    
+    
+    
+    
     //creating the document from the model...
   const newNote = await Note.create({
         "title":title,
