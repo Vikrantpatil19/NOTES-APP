@@ -9,7 +9,7 @@ function Home() {
 
     //function to load the notes that we have fetch using the API calling
     const loadNotes = async() => {
-      const response = await axios.get('http://localhost:5000/notes');
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/notes`);
 
       console.log(response.data.data);
       setNotes(response.data.data);
